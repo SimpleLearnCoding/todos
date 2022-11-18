@@ -2,8 +2,8 @@ import {
     createRouter,
     createWebHashHistory,
 } from 'vue-router'
-import Home from '../pages/home.vue'
-import About from '../pages/about.vue'
+import Home from '../pages/HomePage.vue'
+import About from '../pages/AbountUs.vue'
 
 /**
  * 定义页面路由
