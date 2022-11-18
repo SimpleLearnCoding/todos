@@ -22,9 +22,9 @@
 
 
     <div>
-        {{todos.filter(v=>!v.done).length}}
+        {{active}}
         /
-        {{todos.length}}
+        {{all}}
     </div>
 
 </div>
@@ -52,8 +52,27 @@
                 })
                 this.title = ""
             }
+        },
+        /**
+         * 计算属性
+         *
+         * computed 属性的配置，也即 active 和 all，都是函数。
+         * 这两个函数返回的计算后的值，在模板里可以直接当做数据来用
+         *
+         * 计算属性还内置了缓存功能，如果依赖数据没变化，多次使用计算属性会直接返回缓存结果，
+         * 同我们直接写在模板里相比，性能也有了提升。
+         */
+        computed: {
+            active() {
+                return this.todos.filter(v=>!v.done).length
+            },
+            all() {
+                return this.todos.length
+            }
         }
     }
+
+
     // 启动应用
     Vue.createApp(App).mount('#app')
 </script>
