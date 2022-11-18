@@ -55,73 +55,84 @@ function add() {
 }
 
 /**
- * 使用引入的 ref 函数包裹变量
- * 使其成为响应式数据
+ * 使用一个函数把一个功能相关的数据和方法都维护在一起。
+ * 对代码进行拆分，把功能独立的模块封装成一个独立的函数，真正做到按需拆分。
  */
-let title = ref("")
-let todos = ref([
-  {
-    title: "eat",
-    done: false
-  }, {
-    title: "study",
-    done: true
-  }
-])
+let {title, todos, addTodo, clear, active, all, allDone} = useTodos()
 
-/**
- * 使用 function 定义函数
- * 而不是在 app 的 methods 内定义函数
- *
- * function 内可直接访问外部已定义的变量
- */
-function addTodo() {
-
-  todos.value.push({
-    title: title.value,
-    done: false
-  })
+function useTodos() {
 
   /**
-   * 这里仍要注意：对于 ref 返回的响应式数据，需要修改 .value 才能生效
-   * @type {string}
+   * 使用引入的 ref 函数包裹变量
+   * 使其成为响应式数据
    */
-  title.value = ""
-}
+  let title = ref("")
+  let todos = ref([
+    {
+      title: "eat",
+      done: false
+    }, {
+      title: "study",
+      done: true
+    }
+  ])
 
-/**
- * 同样，使用 .value 属性来修改值
- */
-function clear() {
-  todos.value = todos.value.filter(v => !v.done)
-}
+  /**
+   * 使用 function 定义函数
+   * 而不是在 app 的 methods 内定义函数
+   *
+   * function 内可直接访问外部已定义的变量
+   */
+  function addTodo() {
 
-/**
- * 计算属性
- * 单独引入 computed()
- * @type {ComputedRef<number>}
- */
-let all = computed(() => todos.value.length)
-/**
- * 同样使用 computed() 来赋值计算属性
- * @type {ComputedRef<number>}
- */
-let active = computed(() => todos.value.filter((v) => !v.done).length)
-
-/**
- * 使用 computed() 赋值计算属性 - 对象形式
- * @type {WritableComputedRef<boolean>}
- */
-let allDone = computed({
-  get: function () {
-    return active.value === 0
-  },
-  set: function (val) {
-    todos.value.forEach((todo) => {
-      todo.done = val
+    todos.value.push({
+      title: title.value,
+      done: false
     })
+
+    /**
+     * 这里仍要注意：对于 ref 返回的响应式数据，需要修改 .value 才能生效
+     * @type {string}
+     */
+    title.value = ""
   }
-})
+
+  /**
+   * 同样，使用 .value 属性来修改值
+   */
+  function clear() {
+    todos.value = todos.value.filter(v => !v.done)
+  }
+
+  /**
+   * 计算属性
+   * 单独引入 computed()
+   * @type {ComputedRef<number>}
+   */
+  let all = computed(() => todos.value.length)
+  /**
+   * 同样使用 computed() 来赋值计算属性
+   * @type {ComputedRef<number>}
+   */
+  let active = computed(() => todos.value.filter((v) => !v.done).length)
+
+  /**
+   * 使用 computed() 赋值计算属性 - 对象形式
+   * @type {WritableComputedRef<boolean>}
+   */
+  let allDone = computed({
+    get: function () {
+      return active.value === 0
+    },
+    set: function (val) {
+      todos.value.forEach((todo) => {
+        todo.done = val
+      })
+    }
+  })
+
+  return {title, todos, addTodo, clear, active, all, allDone}
+}
 
 </script>
 
