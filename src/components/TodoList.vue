@@ -12,7 +12,7 @@
     <div class="">
       <input v-model="title" type="text" @keydown.enter="addTodo">
 
-      <button v-if="active<all" @click="clear">清理</button>
+      <button v-if="active < all" @click="clear">清理</button>
 
       <ul v-if="todos.length">
         <!--  Notice: 使用 v-for 指令时，需要定义 :key ，其值要设置为在当条指令内已定义的变量，例如这里的 todo-->
@@ -23,6 +23,12 @@
       </ul>
 
       <div v-else>暂无数据</div>
+
+      <div>
+        全选<input type="checkbox" v-model="allDone"/>
+        <span> {{ active }} / {{ all }} </span>
+      </div>
+
     </div>
 
   </div>
@@ -32,7 +38,7 @@
 <!-- 在 <script setup> 标签内定义的变量和函数，都可以在模板中直接使用。 -->
 <script setup>
 
-import {ref} from "vue";
+import {computed, ref} from "vue";
 
 /**
  * 使用引入的 ref 函数包裹数字
@@ -66,6 +72,8 @@ let todos = ref([
 /**
  * 使用 function 定义函数
  * 而不是在 app 的 methods 内定义函数
+ *
+ * function 内可直接访问外部已定义的变量
  */
 function addTodo() {
 
@@ -80,6 +88,40 @@ function addTodo() {
    */
   title.value = ""
 }
+
+/**
+ * 同样，使用 .value 属性来修改值
+ */
+function clear() {
+  todos.value = todos.value.filter(v => !v.done)
+}
+
+/**
+ * 计算属性
+ * 单独引入 computed()
+ * @type {ComputedRef<number>}
+ */
+let all = computed(() => todos.value.length)
+/**
+ * 同样使用 computed() 来赋值计算属性
+ * @type {ComputedRef<number>}
+ */
+let active = computed(() => todos.value.filter((v) => !v.done).length)
+
+/**
+ * 使用 computed() 赋值计算属性 - 对象形式
+ * @type {WritableComputedRef<boolean>}
+ */
+let allDone = computed({
+  get: function () {
+    return active.value === 0
+  },
+  set: function (val) {
+    todos.value.forEach((todo) => {
+      todo.done = val
+    })
+  }
+})
 
 </script>
 
