@@ -31,12 +31,27 @@
 
     </div>
 
+    <!--  切换全屏  -->
+    <div v-if="!isFullscreen">
+      <button @click="toggle">Enter Screen</button>
+    </div>
+
   </div>
 </template>
 
 
 <!-- 在 <script setup> 标签内定义的变量和函数，都可以在模板中直接使用。 -->
 <script setup>
+
+import { useFullscreen } from "@vueuse/core"
+/**
+ * 使用 vue 官方团队出品的工具包 vueuse
+ * 它把开发中常见的属性都封装成为响应式函数。
+ *
+ * VueUse 中包含了很多我们常用的工具函数，
+ * 可以把网络状态、异步请求的数据、动画和事件等功能，都看成是响应式的数据去管理。
+ */
+const { isFullscreen,toggle } = useFullscreen()
 
 import {computed, ref} from "vue";
 
