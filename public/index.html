@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="./favicon.ico">
+    <script src="https://unpkg.com/vue@next"></script>
     <title>Get Started</title>
 </head>
 <body>
@@ -22,14 +23,15 @@
 
 
     <div>
-        {{active}}
+        全选<input type="checkbox" v-model="allDone">
+        {{ active }}
         /
         {{all}}
     </div>
 
 </div>
 
-<script src="https://unpkg.com/vue@next"></script>
+
 <script>
     const App = {
         data() {
@@ -64,10 +66,32 @@
          */
         computed: {
             active() {
-                return this.todos.filter(v=>!v.done).length
+                return this.todos.filter(v => !v.done).length
             },
             all() {
                 return this.todos.length
+            },
+
+            /**
+             * 全选功能
+             *
+             * 全选框在勾选与取消勾选两个状态之间的切换，会把所有清单内的数据都同步勾选。
+             * 清单内的项目如果全部选中或者取消，也会修改全选框的状态。
+             *
+             * 计算属性存在「修改」属性，所以需要使用 对象 而不是函数
+             * 要变成一个对象，分别实现 get 和 set 函数
+             * get 就是之前的返回值，set 就是修改计算属性要执行的函数。
+             *
+             */
+            allDone: {
+                get: function () {
+                    return this.active === 0
+                },
+                set: function (val) {
+                    this.todos.forEach(todo => {
+                        todo.done = val
+                    })
+                }
             }
         }
     }
@@ -78,10 +102,10 @@
 </script>
 
 <style>
-.done {
-    color: gray;
-    text-decoration: line-through;
-}
+    .done {
+        color: gray;
+        text-decoration: line-through;
+    }
 </style>
 
 </body>
