@@ -3,7 +3,7 @@
     <h3>Todo List</h3>
 
     <div>
-      当前评分：{{star || 'None'}}
+      当前评分：<RateDemo :score="3"></RateDemo>
     </div>
 
     <div class="">
@@ -47,6 +47,11 @@
 <!-- 在 <script setup> 标签内定义的变量和函数，都可以在模板中直接使用。 -->
 <script setup>
 
+/**
+ * 引入封装的组件
+ */
+import RateDemo from "@/components/RateDemo";
+
 import { useFullscreen } from "@vueuse/core"
 /**
  * 使用 vue 官方团队出品的工具包 vueuse
@@ -58,16 +63,6 @@ import { useFullscreen } from "@vueuse/core"
 const { isFullscreen,toggle } = useFullscreen()
 
 import {computed, ref} from "vue";
-
-/**
- * 渲染评级分数
- * 这里限制 rate 应该是 0~5 之间，范围之外会有异常
- * 主要利用了数学知识
- *
- * Notice 计算属性无法使用 const 定义（会引发异常？编译成功但是浏览器无法刷新
- */
-let rate = ref(4)
-let star = computed(() => "★★★★★☆☆☆☆☆".slice(5 - rate.value, 10 - rate.value))
 
 /**
  * 使用引入的 ref 函数包裹数字
