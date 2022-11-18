@@ -62,6 +62,30 @@ function add() {
  */
 let {title, todos, addTodo, clear, active, all, allDone} = useTodos()
 
+/**
+ * watchEffect()
+ *
+ * 在数据变化之后执行指定的函数
+ *
+ */
+import {watchEffect} from "vue";
+
+let todoLocalData = ref(JSON.parse(localStorage.getItem('todos') || '[]'));
+if (todoLocalData.value.length > 0) {
+  /**
+   * 使用 contact 合并数组
+   *
+   * notice 请注意这里需要赋值，contact 并不直接对原始对象进行操作
+   */
+  // console.log(todoLocalData.value)
+  todos.value = todos.value.concat(todoLocalData.value)
+}
+watchEffect(() => {
+  localStorage.setItem('todos', JSON.stringify(todos.value))
+  console.log(todos.value)
+})
+
+
 function useTodos() {
 
   /**
@@ -69,15 +93,7 @@ function useTodos() {
    * 使其成为响应式数据
    */
   let title = ref("")
-  let todos = ref([
-    {
-      title: "eat",
-      done: false
-    }, {
-      title: "study",
-      done: true
-    }
-  ])
+  let todos = ref([])
 
   /**
    * 使用 function 定义函数
