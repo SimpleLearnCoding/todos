@@ -19,5 +19,7 @@ function widenBox() {
 .box {
     background: #42b983;
     height: 100px;
+    /* transition: width 属性线性过渡，过渡时间 1s */
+    transition: width 1s linear;
 }
 </style>
