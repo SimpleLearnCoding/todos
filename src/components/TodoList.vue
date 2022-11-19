@@ -3,7 +3,7 @@
     <h3>Todo List</h3>
 
     <div>
-      当前评分：<RateDemo :score=3 theme=red></RateDemo>
+      当前评分：<ScoringComponent :score=3 theme=red></ScoringComponent>
     </div>
 
     <div class="">
@@ -50,7 +50,7 @@
 /**
  * 引入封装的组件
  */
-import RateDemo from "@/components/RateDemo";
+import ScoringComponent from "@/components/ScoringComponent";
 
 import { useFullscreen } from "@vueuse/core"
 /**
