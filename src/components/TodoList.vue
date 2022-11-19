@@ -6,7 +6,7 @@
       当前评分：
         <!--   添加 scoring 组件的 update-rate 监听函数     -->
         <!--   update-rate 监听函数接收一个 num ，即分数值     -->
-        <ScoringComponent :score="score" theme=red @update-rate="updateRate"></ScoringComponent>
+        <ScoringUseEmit :score="score" theme=red @update-rate="updateRate"></ScoringUseEmit>
         <br>{{score}}
     </div>
 
@@ -54,7 +54,7 @@
 /**
  * 引入封装的组件
  */
-import ScoringComponent from "@/components/ScoringComponent";
+import ScoringUseEmit from "@/components/ScoringUseEmit";
 
 import { useFullscreen } from "@vueuse/core"
 /**
