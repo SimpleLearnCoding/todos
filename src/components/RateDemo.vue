@@ -1,7 +1,7 @@
 <template>
-  <div>
-    {{ rate }}
-  </div>
+    <div :style="fontStyle">
+        {{ rate }}
+    </div>
 </template>
 
 <script setup>
@@ -24,13 +24,37 @@ import {computed, defineProps} from "vue";
  * 即规定：组件将接收外部传来的 score 属性，并且该属性只能为数字 Number
  * 然后根据该 score 属性，计算出评分的星星
  *
- * @type {Readonly<ExtractPropTypes<{score: NumberConstructor}>>}
+ * 添加了 theme 属性
+ * ex: 显示 三颗红色的实心星星
+ * usage: <RateDemo :score=3 theme=red></RateDemo>
+ *
+ * fixme score属性需要在前面加一个 : 冒号，而 theme 不需要
+ *
+ * @type {Readonly<ExtractPropTypes<{score: NumberConstructor, theme: {default: string, type: StringConstructor}}>>}
  */
 let props = defineProps({
-  score: Number
+    score: Number,
+    theme: {
+        type: String,
+        default: "orange"
+    }
 })
 
 let rate = computed(() => "★★★★★☆☆☆☆☆".slice(5 - props.score, 10 - props.score))
+
+/**
+ * 添加颜色主题
+ * @type {{red: string, orange: string, green: string, black: string}}
+ */
+const themeObj = {
+    'black': '#000000',
+    'red': '#f80707',
+    'green': '#0ff807',
+    'orange': '#fa541c',
+}
+const fontStyle = computed(() => {
+    return `color: ${themeObj[props.theme]}`
+})
 
 </script>
 

@@ -3,7 +3,7 @@
     <h3>Todo List</h3>
 
     <div>
-      当前评分：<RateDemo :score="3"></RateDemo>
+      当前评分：<RateDemo :score=3 theme=red></RateDemo>
     </div>
 
     <div class="">
