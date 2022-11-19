@@ -3,7 +3,9 @@
         <div class="rate" @mouseout="mouseOut">
             <span @mouseover="mouseOver(num)" v-for="num in 5" :key="num">☆</span>
             <span class="hollow" :style="fontWidth">
-                <span @mouseover="mouseOver(num)" v-for="num in 5" :key="num">★</span>
+                <!--        添加点击事件 @click="onRate(num)"        -->
+                <!--        vue 3 使用 defineEmit 来定义对外“发射”的数据        -->
+                <span @mouseover="mouseOver(num)" @click="onRate(num)" v-for="num in 5" :key="num">★</span>
             </span>
         </div>
     </div>
@@ -11,7 +13,7 @@
 
 <script setup>
 
-import {computed, defineProps, ref} from "vue";
+import {computed, defineProps, defineEmits, ref} from "vue";
 
 let props = defineProps({
     score: Number,
@@ -44,6 +46,26 @@ function mouseOut() {
     width.value = props.score
 }
 const fontWidth = computed(() => `width: ${width.value}em;`)
+
+/**
+ * vue 3 使用 defineEmit 来定义对外“发射”的事件
+ *
+ * ex: 定义一个事件发送器并包含 update-rate 事件
+ * usage:
+ * let emits = defineEmits(['update-rate'])
+ *
+ * 然后在 js 代码中可将数据 发送 给指定事件
+ * ex: 将 num 发送给 update-rate 事件
+ * usage:
+ * emits('update-rate', num)
+ *
+ * @type {EmitFn<string[]>}
+ */
+let emits = defineEmits(['update-rate'])
+function onRate(num) {
+    console.log(`scoring：${num}`)
+    emits('update-rate', num)
+}
 
 </script>
 

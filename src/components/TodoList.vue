@@ -3,7 +3,11 @@
     <h3>Todo List</h3>
 
     <div>
-      当前评分：<ScoringComponent :score=3 theme=red></ScoringComponent>
+      当前评分：
+        <!--   添加 scoring 组件的 update-rate 监听函数     -->
+        <!--   update-rate 监听函数接收一个 num ，即分数值     -->
+        <ScoringComponent :score="score" theme=red @update-rate="updateRate"></ScoringComponent>
+        <br>{{score}}
     </div>
 
     <div class="">
@@ -63,6 +67,15 @@ import { useFullscreen } from "@vueuse/core"
 const { isFullscreen,toggle } = useFullscreen()
 
 import {computed, ref} from "vue";
+
+/**
+ * 定义分数更新函数
+ * 该分数值由子组件发送给当前组件（父组件）
+ */
+let score = ref(3.5)
+function updateRate(num) {
+    score.value = num
+}
 
 /**
  * 使用引入的 ref 函数包裹数字
