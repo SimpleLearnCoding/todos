@@ -4,9 +4,7 @@
 
     <div>
       当前评分：
-        <!--   添加 scoring 组件的 update-rate 监听函数     -->
-        <!--   update-rate 监听函数接收一个 num ，即分数值     -->
-        <ScoringUseEmit :score="score" theme=red @update-rate="updateRate"></ScoringUseEmit>
+        <ScoringUseEmit theme=red v-model:score="score"></ScoringUseEmit>
         <br>{{score}}
     </div>
 
@@ -73,9 +71,6 @@ import {computed, ref} from "vue";
  * 该分数值由子组件发送给当前组件（父组件）
  */
 let score = ref(3.5)
-function updateRate(num) {
-    score.value = num
-}
 
 /**
  * 使用引入的 ref 函数包裹数字

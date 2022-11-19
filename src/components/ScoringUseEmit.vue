@@ -64,12 +64,21 @@ const fontWidth = computed(() => `width: ${width.value}em;`)
  * usage:
  * <SubComponentName @update-rate=“updateRage”></SubComponentName>
  *
+ * Add Contents!!!
+ * 这里改为了可使用 v-model 的形式来传递属性和接收事件
+ * ex: 父组件利用 v-model:score=xxx 的形式接收子组件 emit 事件 update:score 的数据
+ * usage:
+ * <SubComponentName v-model:score="score"></SubComponentName>
+ * description:
+ * 此时父组件会接收 score 变量的所有变动信息
+ * 即子组件对 score 属性作出修改后，父组件也可以获取其值
+ *
  * @type {EmitFn<string[]>}
  */
-let emits = defineEmits(['update-rate'])
+let emits = defineEmits(['update:score'])
 function onRate(num) {
     console.log(`scoring：${num}`)
-    emits('update-rate', num)
+    emits('update:score', num)
 }
 
 </script>
