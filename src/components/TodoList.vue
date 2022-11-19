@@ -3,8 +3,9 @@
     <h3>Todo List</h3>
 
     <div>
-      当前评分：
-        <ScoringUseEmit theme=red v-model:score="score"></ScoringUseEmit>
+        <!--    这里将文本移入了 ScoringUseEmit 组件的 <slot> 插槽内    -->
+        <!--    <slot> 插槽被视为父组件的元素，会被放在子组件之前，与子组件合并显示    -->
+        <ScoringUseEmit theme=red v-model:score="score">当前评分：</ScoringUseEmit>
         <br>{{score}}
     </div>
 

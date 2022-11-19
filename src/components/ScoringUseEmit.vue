@@ -1,5 +1,8 @@
 <template>
     <div :style="fontStyle">
+        <!--    添加 slot 插槽    -->
+        <!--    <slot> 插槽被视为父组件的元素，会被放在子组件之前，与子组件合并显示    -->
+        <slot></slot>
         <div class="rate" @mouseout="mouseOut">
             <span @mouseover="mouseOver(num)" v-for="num in 5" :key="num">☆</span>
             <span class="hollow" :style="fontWidth">
