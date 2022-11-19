@@ -59,6 +59,11 @@ const fontWidth = computed(() => `width: ${width.value}em;`)
  * usage:
  * emits('update-rate', num)
  *
+ * 在父组件中，接收子组件的数据可使用 @ 标记 加上事件名的形式
+ * ex: 父组件利用函数 updateRage() 接收子组件 emit 事件 update-rate 的数据
+ * usage:
+ * <SubComponentName @update-rate=“updateRage”></SubComponentName>
+ *
  * @type {EmitFn<string[]>}
  */
 let emits = defineEmits(['update-rate'])
