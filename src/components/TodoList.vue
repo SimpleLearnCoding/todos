@@ -1,12 +1,6 @@
 <template>
   <div>
     <h3>Todo List</h3>
-
-    <div class="">
-      Count: {{ count }} |
-      <button @click="add">Accumulator</button>
-    </div>
-
     <br>
 
     <div class="">
@@ -53,24 +47,6 @@ import { useFullscreen } from "@vueuse/core"
  */
 const { isFullscreen,toggle } = useFullscreen()
 
-import {computed, ref} from "vue";
-
-/**
- * 使用引入的 ref 函数包裹数字
- * 返回的 count 变量就是响应式的数据
- */
-let count = ref(1)
-let color = ref('#42b983')
-
-/**
- * 使用 add 函数实现数字的修改
- * 对于 ref 返回的响应式数据，需要修改 .value 才能生效
- */
-function add() {
-  count.value++
-  color.value = Math.random() > 0.5 ? '#42b983' : '#55c8d7';
-}
-
 /**
  * 使用一个函数把一个功能相关的数据和方法都维护在一起。
  * 对代码进行拆分，把功能独立的模块封装成一个独立的函数，真正做到按需拆分。
@@ -85,6 +61,7 @@ let {title, todos, addTodo, clear, active, all, allDone} = useTodos()
  */
 import {watchEffect} from "vue";
 
+import {ref} from "vue";
 let todoLocalData = ref(JSON.parse(localStorage.getItem('todos') || '[]'));
 if (todoLocalData.value.length > 0) {
   /**
@@ -99,7 +76,7 @@ watchEffect(() => {
   localStorage.setItem('todos', JSON.stringify(todos.value))
 })
 
-
+import {computed} from "vue";
 function useTodos() {
 
   /**
