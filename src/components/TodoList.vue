@@ -4,6 +4,14 @@
         <br>
 
         <div class="">
+
+            <!--      requirement: Displays a pop-up reminder when the user's input is empty      -->
+            <div class="info-wrapper" v-if="showModal">
+                <div class="info">
+                    No input detected!
+                </div>
+            </div>
+
             <input v-model="title" type="text" @keydown.enter="addTodo">
 
             <button v-if="active < all" @click="clear">清理</button>
@@ -48,36 +56,7 @@ import {useFullscreen} from "@vueuse/core"
  */
 const {isFullscreen, toggle} = useFullscreen()
 
-/**
- * 使用一个函数把一个功能相关的数据和方法都维护在一起。
- * 对代码进行拆分，把功能独立的模块封装成一个独立的函数，真正做到按需拆分。
- */
-let {title, todos, addTodo, clear, active, all, allDone} = useTodos()
-
-/**
- * watchEffect()
- *
- * 在数据变化之后执行指定的函数
- *
- */
-import {watchEffect} from "vue";
-
 import {ref} from "vue";
-
-let todoLocalData = ref(JSON.parse(localStorage.getItem('todos') || '[]'));
-if (todoLocalData.value.length > 0) {
-    /**
-     * 使用 contact 合并数组
-     *
-     * notice 请注意这里需要赋值，contact 并不直接对原始对象进行操作
-     */
-    // console.log(todoLocalData.value)
-    todos.value = todos.value.concat(todoLocalData.value)
-}
-watchEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos.value))
-})
-
 import {computed} from "vue";
 
 function useTodos() {
@@ -145,6 +124,34 @@ function useTodos() {
 
     return {title, todos, addTodo, clear, active, all, allDone}
 }
+
+/**
+ * 使用一个函数把一个功能相关的数据和方法都维护在一起。
+ * 对代码进行拆分，把功能独立的模块封装成一个独立的函数，真正做到按需拆分。
+ */
+let {title, todos, addTodo, clear, active, all, allDone} = useTodos()
+
+/**
+ * watchEffect()
+ *
+ * 在数据变化之后执行指定的函数
+ *
+ */
+import {watchEffect} from "vue";
+
+let todoLocalData = ref(JSON.parse(localStorage.getItem('todos') || '[]'));
+if (todoLocalData.value.length > 0) {
+    /**
+     * 使用 contact 合并数组
+     *
+     * notice 请注意这里需要赋值，contact 并不直接对原始对象进行操作
+     */
+    // console.log(todoLocalData.value)
+    todos.value = todos.value.concat(todoLocalData.value)
+}
+watchEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos.value))
+})
 
 </script>
 
