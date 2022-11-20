@@ -21,9 +21,13 @@
         <!--   在下面的代码中，使用 transition-group 包裹渲染的 li 元素，并且设置动画的 name 属性为 flip-list   -->
         <transition-group name="flip-list" tag="ul">
             <!--  Notice: 使用 v-for 指令时，需要定义 :key ，其值要设置为在当条指令内已定义的变量，例如这里的 todo -->
-            <li v-for="todo in todos" :key="todo">
+            <li v-for="(todo, i) in todos" :key="todo">
                 <input type="checkbox" v-model="todo.done">
                 <span :class="{done:todo.done}">{{ todo.title }}</span>
+
+                <!--        添加 removeTodo 来清除事项        -->
+                <!--        这里利用了 v-for 的索引 i 来获取要删除的列表索引号        -->
+                <span class="remove-btn" @click="removeTodo($event, i)">❌</span>
             </li>
         </transition-group>
     </ul>
@@ -116,6 +120,15 @@ function useTodos() {
     }
 
     /**
+     * 删除指定事项
+     * 使用 splice() 函数来删除元素
+     * 该函数在 useTodos() 内定义，请记得在最后 return 时返回
+     */
+    function removeTodo(e, i) {
+        todos.value.splice(i, 1)
+    }
+
+    /**
      * 计算属性
      * 单独引入 computed()
      * @type {ComputedRef<number>}
@@ -142,14 +155,14 @@ function useTodos() {
         }
     })
 
-    return {title, todos, addTodo, clear, active, all, allDone}
+    return {title, todos, addTodo, clear, active, all, allDone, removeTodo}
 }
 
 /**
  * 使用一个函数把一个功能相关的数据和方法都维护在一起。
  * 对代码进行拆分，把功能独立的模块封装成一个独立的函数，真正做到按需拆分。
  */
-let {title, todos, addTodo, clear, active, all, allDone} = useTodos()
+let {title, todos, addTodo, clear, active, all, allDone, removeTodo} = useTodos()
 
 /**
  * watchEffect()
