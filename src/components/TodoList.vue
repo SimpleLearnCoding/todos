@@ -6,11 +6,14 @@
         <div class="">
 
             <!--      requirement: Displays a pop-up reminder when the user's input is empty      -->
-            <div class="info-wrapper" v-if="showModal">
-                <div class="info">
-                    No input detected!
+            <!--     Read the TransitionText component code for the transition component description.     -->
+            <transition name="modal">
+                <div class="info-wrapper" v-if="showModal">
+                    <div class="info">
+                        No input detected!
+                    </div>
                 </div>
-            </div>
+            </transition>
 
             <input v-model="title" type="text" @keydown.enter="addTodo">
 
@@ -175,6 +178,28 @@ watchEffect(() => {
 </script>
 
 <style scoped>
+
+
+/**
+ * 弹窗动画效果
+ */
+.modal-enter-from {
+    opacity: 0;
+    transform: translateY(-60px);
+}
+
+.modal-enter-active {
+    transition: all 0.3s ease;
+}
+
+.modal-leave-to {
+    opacity: 0;
+    transform: translateY(-60px);
+}
+
+.modal-leave-active {
+    transition: all 0.3s ease;
+}
 
 /**
  * 弹窗样式
