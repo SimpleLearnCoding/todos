@@ -24,7 +24,13 @@ const routes = [
 ]
 
 /**
- * 新建路由实例
+ *
+ * question: 前端路由的实现原理
+ * 通过 URL 区分路由的机制上，有两种实现方式：
+ * 一种是 hash 模式，通过 URL 中 # 后面的内容做区分，我们称之为 hash-router；
+ * 另外一个方式就是 history 模式，在这种方式下，路由看起来和正常的 URL 完全一致。
+ * 这两个不同的原理，在 vue-router 中对应两个函数，分别是 createWebHashHistory 和 createWebHistory。
+ *
  * @type {Router}
  */
 const router = createRouter({
