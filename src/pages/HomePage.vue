@@ -21,7 +21,7 @@
         <!--    这里将文本移入了 ScoringUseEmit 组件的 <slot> 插槽内    -->
         <!--    <slot> 插槽被视为父组件的元素，会被放在子组件之前，与子组件合并显示    -->
         <ScoringUseEmit theme=red v-model:score="score">当前评分：</ScoringUseEmit>
-        <br>{{score}}
+        <br>{{ score }}
     </div>
 
     <div v-if="version === 6">
@@ -42,9 +42,10 @@ import AccumulatorCounter from "@/components/AccumulatorCounter";
  * 控制显示页面的版本号
  * @type {number}
  */
-const version = 6
+const version = 1
 
 import {ref} from "vue";
+
 /**
  * 定义分数更新函数
  * 该分数值由子组件发送给当前组件（父组件）
