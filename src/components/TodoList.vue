@@ -1,47 +1,41 @@
 <template>
-    <div>
-        <h3>Todo List</h3>
-        <br>
+    <h3>Todo List</h3>
+    <br>
 
-        <div class="">
-
-            <!--      requirement: Displays a pop-up reminder when the user's input is empty      -->
-            <!--     Read the TransitionText component code for the transition component description.     -->
-            <transition name="modal">
-                <div class="info-wrapper" v-if="showModal">
-                    <div class="info">
-                        No input detected!
-                    </div>
-                </div>
-            </transition>
-
-            <input v-model="title" type="text" @keydown.enter="addTodo">
-
-            <button v-if="active < all" @click="clear">清理</button>
-
-            <ul v-if="todos.length">
-                <!--  Notice: 使用 v-for 指令时，需要定义 :key ，其值要设置为在当条指令内已定义的变量，例如这里的 todo-->
-                <li v-for="todo in todos" :key="todo">
-                    <input type="checkbox" v-model="todo.done">
-                    <span :class="{done:todo.done}">{{ todo.title }}</span>
-                </li>
-            </ul>
-
-            <div v-else>暂无数据</div>
-
-            <div>
-                全选<input type="checkbox" v-model="allDone"/>
-                <span> {{ active }} / {{ all }} </span>
+    <!--      requirement: Displays a pop-up reminder when the user's input is empty      -->
+    <!--     Read the TransitionText component code for the transition component description.     -->
+    <transition name="modal">
+        <div class="info-wrapper" v-if="showModal">
+            <div class="info">
+                No input detected!
             </div>
-
         </div>
+    </transition>
 
-        <!--  切换全屏  -->
-        <div v-if="!isFullscreen">
-            <button @click="toggle">Enter Screen</button>
-        </div>
+    <input v-model="title" type="text" @keydown.enter="addTodo">
 
+    <button v-if="active < all" @click="clear">清理</button>
+
+    <ul v-if="todos.length">
+        <!--  Notice: 使用 v-for 指令时，需要定义 :key ，其值要设置为在当条指令内已定义的变量，例如这里的 todo -->
+        <li v-for="todo in todos" :key="todo">
+            <input type="checkbox" v-model="todo.done">
+            <span :class="{done:todo.done}">{{ todo.title }}</span>
+        </li>
+    </ul>
+    <div v-else>暂无数据</div>
+
+    <div>
+        全选<input type="checkbox" v-model="allDone"/>
+        <span> {{ active }} / {{ all }} </span>
     </div>
+
+
+    <!--  切换全屏  -->
+    <div v-if="!isFullscreen">
+        <button @click="toggle">Enter Screen</button>
+    </div>
+
 </template>
 
 
