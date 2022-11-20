@@ -42,7 +42,7 @@ import AccumulatorCounter from "@/components/AccumulatorCounter";
  * 控制显示页面的版本号
  * @type {number}
  */
-const version = 1
+const version = 6
 
 import {ref} from "vue";
 
