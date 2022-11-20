@@ -59,6 +59,11 @@ const {isFullscreen, toggle} = useFullscreen()
 import {ref} from "vue";
 import {computed} from "vue";
 
+/**
+ * 弹窗显示配置
+ */
+let showModal = ref(false)
+
 function useTodos() {
 
     /**
@@ -75,6 +80,20 @@ function useTodos() {
      * function 内可直接访问外部已定义的变量
      */
     function addTodo() {
+
+        /**
+         * 检测到用户什么都没输入时，显示弹窗
+         * 并在 1500ms 后关闭
+         */
+        if (!title.value) {
+            showModal.value = true
+
+            setTimeout(() => {
+                showModal.value = false
+            }, 1500)
+
+            return
+        }
 
         todos.value.push({
             title: title.value,
@@ -156,8 +175,19 @@ watchEffect(() => {
 </script>
 
 <style scoped>
-h3 {
-    /* 使用 v-bind 在 style 中直接使用 JavaScript 中的变量 */
-    color: v-bind(color);
+
+/**
+ * 弹窗样式
+ */
+.info-wrapper {
+    position: fixed;
+    top: 20px;
+    width: 200px;
+}
+
+.info {
+    padding: 20px;
+    color: white;
+    background: #f68266;
 }
 </style>
