@@ -1,4 +1,4 @@
-import { defineComponent, h } from "vue"
+import {defineComponent} from "vue"
 
 /*
 * 使用 defineComponent 定义一个组件，组件内部配置了 props 和 setup。
@@ -20,11 +20,22 @@ export default defineComponent({
             required: true
         }
     },
-    setup(props, { slots }) {
-        return () => h(
-            'h' + props.level, // 标签名
-            {}, // prop 或 attribute
-            slots.default() // 子节点
-        )
+
+    /**
+     * 使用 JSX 插件 而不是 h 函数
+     * @param props
+     * @param slots
+     * @returns {function()}
+     */
+    setup(props, {slots}) {
+
+        /**
+         * 使用变量 tag 计算出标签类型，直接使用渲染
+         * 然后使用一个大括号把默认插槽包起来就可以了
+         * @type {string}
+         */
+
+        const tag = 'h' + props.level
+        return () => <tag>{slots.default()}</tag>
     }
 })
