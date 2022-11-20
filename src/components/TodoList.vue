@@ -17,11 +17,15 @@
     <button v-if="active < all" @click="clear">清理</button>
 
     <ul v-if="todos.length">
-        <!--  Notice: 使用 v-for 指令时，需要定义 :key ，其值要设置为在当条指令内已定义的变量，例如这里的 todo -->
-        <li v-for="todo in todos" :key="todo">
-            <input type="checkbox" v-model="todo.done">
-            <span :class="{done:todo.done}">{{ todo.title }}</span>
-        </li>
+        <!--    使用 transition-group 内置组件设置列表动画    -->
+        <!--   在下面的代码中，使用 transition-group 包裹渲染的 li 元素，并且设置动画的 name 属性为 flip-list   -->
+        <transition-group name="flip-list" tag="ul">
+            <!--  Notice: 使用 v-for 指令时，需要定义 :key ，其值要设置为在当条指令内已定义的变量，例如这里的 todo -->
+            <li v-for="todo in todos" :key="todo">
+                <input type="checkbox" v-model="todo.done">
+                <span :class="{done:todo.done}">{{ todo.title }}</span>
+            </li>
+        </transition-group>
     </ul>
     <div v-else>暂无数据</div>
 
@@ -173,6 +177,23 @@ watchEffect(() => {
 
 <style scoped>
 
+/**
+ * transition-group 组件
+ * flip-list 动画效果
+ * 比 transition 效果新增了 move 类
+ */
+.flip-list-move {
+    transition: transform 0.8s ease;
+}
+
+.flip-list-enter-active, .flip-list-leave-active {
+    transition: all 1s ease;
+}
+
+.flip-list-enter-from, .flip-list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
 
 /**
  * 弹窗动画效果
