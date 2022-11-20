@@ -1,8 +1,10 @@
 <template>
-  <h2>About Us</h2>
+  <HeadingJsx :level="1">About Us</HeadingJsx>
 </template>
 
-<script>
+<script setup>
+
+import HeadingJsx from "@/components/HeadingJsx";
 
 </script>
 
