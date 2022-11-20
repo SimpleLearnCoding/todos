@@ -47,7 +47,7 @@ import TodoListJsx from "@/components/TodoListJsx";
  * 控制显示页面的版本号
  * @type {number}
  */
-const version = 7
+const version = 1
 
 import {ref} from "vue";
 
