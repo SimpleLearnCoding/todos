@@ -27,6 +27,10 @@
     <div v-if="version === 6">
         <AccumulatorCounter></AccumulatorCounter>
     </div>
+
+    <div v-if="version === 7">
+        <TodoListJsx></TodoListJsx>
+    </div>
 </template>
 
 <script setup>
@@ -37,12 +41,13 @@ import MoveAnimation from "@/components/MoveAnimation";
 import TransitionText from "@/components/TransitionText";
 import ScoringUseEmit from "@/components/ScoringUseEmit";
 import AccumulatorCounter from "@/components/AccumulatorCounter";
+import TodoListJsx from "@/components/TodoListJsx";
 
 /**
  * 控制显示页面的版本号
  * @type {number}
  */
-const version = 6
+const version = 7
 
 import {ref} from "vue";
 
