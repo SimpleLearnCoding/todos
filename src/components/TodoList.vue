@@ -2,13 +2,6 @@
   <div>
     <h3>Todo List</h3>
 
-    <div>
-        <!--    这里将文本移入了 ScoringUseEmit 组件的 <slot> 插槽内    -->
-        <!--    <slot> 插槽被视为父组件的元素，会被放在子组件之前，与子组件合并显示    -->
-        <ScoringUseEmit theme=red v-model:score="score">当前评分：</ScoringUseEmit>
-        <br>{{score}}
-    </div>
-
     <div class="">
       Count: {{ count }} |
       <button @click="add">Accumulator</button>
@@ -50,11 +43,6 @@
 <!-- 在 <script setup> 标签内定义的变量和函数，都可以在模板中直接使用。 -->
 <script setup>
 
-/**
- * 引入封装的组件
- */
-import ScoringUseEmit from "@/components/ScoringUseEmit";
-
 import { useFullscreen } from "@vueuse/core"
 /**
  * 使用 vue 官方团队出品的工具包 vueuse
@@ -66,12 +54,6 @@ import { useFullscreen } from "@vueuse/core"
 const { isFullscreen,toggle } = useFullscreen()
 
 import {computed, ref} from "vue";
-
-/**
- * 定义分数更新函数
- * 该分数值由子组件发送给当前组件（父组件）
- */
-let score = ref(3.5)
 
 /**
  * 使用引入的 ref 函数包裹数字
