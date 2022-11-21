@@ -5,6 +5,7 @@ import router from "./router/index";
 import store from "./store/index";
 
 import Antd from "ant-design-vue";
+import 'ant-design-vue/dist/antd.css';
 
 /**
  * 使用 use() 加载 router 配置
