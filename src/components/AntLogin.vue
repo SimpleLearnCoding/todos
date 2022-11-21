@@ -9,10 +9,10 @@
         >
             <a-form-item
                 label="Username"
-                name="username"
+                name="name"
                 :rules="[{ required: true, message: 'Please input your username!' }]"
             >
-                <a-input v-model:value="formState.username">
+                <a-input v-model:value="formState.name">
                     <template #prefix>
                         <UserOutlined class="site-form-item-icon"/>
                     </template>
@@ -53,9 +53,10 @@
 import {defineComponent, reactive, computed} from 'vue';
 import {UserOutlined, LockOutlined} from '@ant-design/icons-vue';
 import {Layout, LayoutContent} from "ant-design-vue";
+import axios from "axios";
 
 interface FormState {
-    username: string;
+    name: string;
     password: string;
     remember: boolean;
 }
@@ -69,19 +70,25 @@ export default defineComponent({
     },
     setup() {
         const formState = reactive<FormState>({
-            username: '',
+            name: '',
             password: '',
             remember: true,
         });
         const onFinish = (values: any) => {
-            console.log('Success:', values);
+            const response = axios.post('http://localhost:83/admin/login', values)
+                .then(function (response) {
+                    console.log('Response Success:', response);
+                })
+                .catch(function (error) {
+                    console.log('Response Error:', error);
+                });
         };
 
         const onFinishFailed = (errorInfo: any) => {
             console.log('Failed:', errorInfo);
         };
         const disabled = computed(() => {
-            return !(formState.username && formState.password);
+            return !(formState.name && formState.password);
         });
         return {
             formState,
