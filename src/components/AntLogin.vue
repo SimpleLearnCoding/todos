@@ -83,7 +83,10 @@ export default defineComponent({
             remember: true,
         });
 
-        const apiHost = process.env.BACKEND_HOST || 'http://localhost:83';
+        /**
+         * 使用 import.meta.env.* 来访问环境变量
+         */
+        const apiHost = import.meta.env.VITE_BACKEND_HOST || 'http://localhost:83';
 
         /**
          * 提交表单且数据验证成功后回调事件
