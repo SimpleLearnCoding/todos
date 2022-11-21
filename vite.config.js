@@ -12,21 +12,14 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
      * @type {Record<string, string>}
      */
     const env = loadEnv(mode, process.cwd(), '')
-    console.log(command, mode, env.BACKEND_HOST)
+    console.log(command, mode)
 
     if (command === 'serve' || mode === 'development') {
         // 开发环境配置
-        /**
-         * 使用 localhost 时，请务必加上 http:// 前缀
-         * @type {string}
-         */
-        env.BACKEND_HOST = 'http://localhost:83'
     }
     if (command === 'build' || mode === 'production') {
         // 生产环境配置
-        env.BACKEND_HOST = 'https://www.google.com'
     }
-    console.log('当前 BACKEND_HOST 环境变量：' + env.BACKEND_HOST)
 
     /**
      * 通用配置
@@ -46,6 +39,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
          * @link https://cn.vitejs.dev/config/#environment-variables
          *
          * 在 ts 中可通过 process.env 形式获取环境变量的值
+         * 需要添加 @types/node 依赖
          * ex: process.env.BACKEND_HOST
          */
         define: {
