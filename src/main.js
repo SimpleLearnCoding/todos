@@ -13,4 +13,10 @@ import Antd from "ant-design-vue";
  * 使用 use() 注册 Antd 组件 - 该方式为全局注册，更多请参考：
  * @link https://antdv.com/docs/vue/getting-started-cn
  */
-createApp(App).use(store).use(router).use(Antd).mount('#app')
+const app = createApp(App)
+
+app.use(store)
+app.use(router)
+app.use(Antd)
+
+app.mount('#app')

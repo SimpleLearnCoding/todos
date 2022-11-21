@@ -33,32 +33,32 @@
     </div>
 </template>
 
-<script setup>
+<script>
+    import TodoList from "@/components/TodoList.vue";
+    import WidenAnimation from "@/components/WidenAnimation.vue";
+    import MoveAnimation from "@/components/MoveAnimation.vue";
+    import TransitionText from "@/components/TransitionText.vue";
+    import ScoringUseEmit from "@/components/ScoringUseEmit.vue";
+    import AccumulatorCounter from "@/components/AccumulatorCounter.vue";
+    import TodoListJsx from "@/components/TodoListJsx.jsx";
+    import {ref} from "vue";
 
-import TodoList from "../components/TodoList"
-import WidenAnimation from "../components/WidenAnimation"
-import MoveAnimation from "@/components/MoveAnimation";
-import TransitionText from "@/components/TransitionText";
-import ScoringUseEmit from "@/components/ScoringUseEmit";
-import AccumulatorCounter from "@/components/AccumulatorCounter";
-import TodoListJsx from "@/components/TodoListJsx";
-
-/**
- * 控制显示页面的版本号
- * @type {number}
- */
-const version = 1
-
-import {ref} from "vue";
-
-/**
- * 定义分数更新函数
- * 该分数值由子组件发送给当前组件（父组件）
- */
-let score = ref(4)
+    export default {
+        components: {
+            TodoList,
+            WidenAnimation,
+            MoveAnimation,
+            TransitionText,
+            ScoringUseEmit,
+            AccumulatorCounter,
+            TodoListJsx,
+        },
+        setup() {
+            return {
+                version: ref(1),
+                score: ref(3),
+            }
+        }
+    }
 
 </script>
-
-<style scoped>
-
-</style>

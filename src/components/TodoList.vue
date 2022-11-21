@@ -51,6 +51,7 @@
 <script setup>
 
 import {useFullscreen} from "@vueuse/core"
+import {ref, computed, watchEffect} from "vue"
 
 /**
  * 使用 vue 官方团队出品的工具包 vueuse
@@ -60,9 +61,6 @@ import {useFullscreen} from "@vueuse/core"
  * 可以把网络状态、异步请求的数据、动画和事件等功能，都看成是响应式的数据去管理。
  */
 const {isFullscreen, toggle} = useFullscreen()
-
-import {ref} from "vue";
-import {computed} from "vue";
 
 /**
  * 弹窗显示配置
@@ -163,14 +161,6 @@ function useTodos() {
  * 对代码进行拆分，把功能独立的模块封装成一个独立的函数，真正做到按需拆分。
  */
 let {title, todos, addTodo, clear, active, all, allDone, removeTodo} = useTodos()
-
-/**
- * watchEffect()
- *
- * 在数据变化之后执行指定的函数
- *
- */
-import {watchEffect} from "vue";
 
 let todoLocalData = ref(JSON.parse(localStorage.getItem('todos') || '[]'));
 if (todoLocalData.value.length > 0) {
