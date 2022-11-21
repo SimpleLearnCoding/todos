@@ -60,6 +60,11 @@ interface FormState {
     password: string;
     remember: boolean;
 }
+interface Response {
+    code: number;
+    message: string;
+    data: string | null;
+}
 
 export default defineComponent({
     components: {
@@ -73,8 +78,8 @@ export default defineComponent({
          * 请注意此处定义应与 interface FormState 一致
          */
         const formState = reactive<FormState>({
-            name: '',
-            password: '',
+            name: 'test',
+            password: '123456',
             remember: true,
         });
 
@@ -98,9 +103,21 @@ export default defineComponent({
              *
              * @link https://www.axios-http.cn/docs/post_example
              */
-            const response = axios.post('http://localhost:83/admin/login', formState)
+            const responseData = axios.post('http://localhost:83/admin/login', formState)
                 .then(function (response) {
                     console.log('Response Success:', response);
+
+                    /**
+                     * 使用类型接口，并进行验证
+                     * ex:
+                     * const data = <Response>response.data;
+                     */
+                    const data = <Response>response.data;
+                    if(data.code !== 1) {
+                        throw new Error(`请求有误! 错误信息：${data.message}`);
+                    } else {
+                        console.log('Response Result:', data.data);
+                    }
                 })
                 .catch(function (error) {
                     console.log('Response Error:', error);
