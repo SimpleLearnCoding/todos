@@ -3,7 +3,7 @@ import {
     createWebHashHistory,
 } from 'vue-router'
 import Home from '../pages/HomePage.vue'
-import About from '../pages/AbountUs.vue'
+import About from '../pages/AboutUs.vue'
 
 /**
  * 定义页面路由
