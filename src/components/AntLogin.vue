@@ -83,6 +83,8 @@ export default defineComponent({
             remember: true,
         });
 
+        const apiHost = process.env.BACKEND_HOST || 'http://localhost:83';
+
         /**
          * 提交表单且数据验证成功后回调事件
          * @link https://antdv.com/components/form-cn
@@ -103,7 +105,7 @@ export default defineComponent({
              *
              * @link https://www.axios-http.cn/docs/post_example
              */
-            const responseData = axios.post('http://localhost:83/admin/login', formState)
+            const responseData = axios.post(apiHost + `/admin/login`, formState)
                 .then(function (response) {
                     console.log('Response Success:', response);
 
