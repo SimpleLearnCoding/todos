@@ -31,6 +31,10 @@
     <div v-if="version === 7">
         <TodoListJsx></TodoListJsx>
     </div>
+
+    <div v-if="version === 8">
+        <AntLogin></AntLogin>
+    </div>
 </template>
 
 <script>
@@ -41,10 +45,12 @@
     import ScoringUseEmit from "@/components/ScoringUseEmit.vue";
     import AccumulatorCounter from "@/components/AccumulatorCounter.vue";
     import TodoListJsx from "@/components/TodoListJsx.jsx";
+    import AntLogin from "@/components/AntLogin.vue";
     import {ref} from "vue";
 
     export default {
         components: {
+            AntLogin,
             TodoList,
             WidenAnimation,
             MoveAnimation,
@@ -55,7 +61,7 @@
         },
         setup() {
             return {
-                version: ref(1),
+                version: ref(8),
                 score: ref(3),
             }
         }
