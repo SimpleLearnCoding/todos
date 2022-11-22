@@ -159,7 +159,7 @@ export default defineComponent({
     },
 });
 </script>
-<style>
+<style scoped>
 #components-form-demo-normal-login .login-form {
     max-width: 300px;
 }
