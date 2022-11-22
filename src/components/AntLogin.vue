@@ -9,8 +9,8 @@
         >
             <a-form-item
                 label="Username"
-                name="username"
-                :rules="[{ required: false, message: 'Please input your username!' }]"
+                name="name"
+                :rules="[{ required: true, message: 'Please input your username!' }]"
             >
                 <a-input v-model:value="formState.name">
                     <template #prefix>
@@ -55,11 +55,19 @@ import {UserOutlined, LockOutlined} from '@ant-design/icons-vue';
 import {Layout, LayoutContent} from "ant-design-vue";
 import axios from "axios";
 
-interface FormState {
-    name: string;
-    password: string;
-    remember: boolean;
+
+/**
+ * 定义页面接口
+ * 使用 路由地址 为 key
+ */
+interface Api {
+    '/admin/login': {
+        name: string;
+        password: string;
+        remember: boolean;
+    },
 }
+
 interface Response {
     code: number;
     message: string;
@@ -75,9 +83,11 @@ export default defineComponent({
     },
     setup() {
         /**
-         * 请注意此处定义应与 interface FormState 一致
+         * 初始化表单信息
+         * 请注意此处定义应与 interface Api['/admin/login'] 一致
+         * 如果不一致也没关系，以定义的数据为准（并不会以接口过滤），只是可以起到字段提示作用
          */
-        const formState = reactive<FormState>({
+        const formState = reactive<Api['/admin/login']>({
             name: 'test',
             password: '123456',
             remember: true,
@@ -96,21 +106,21 @@ export default defineComponent({
          * 经测试，这里传入的 values 结构与表单的结构一致，其 key 为表单项的 name 属性值
          * 如需正确结构的请求数据，应在 template 中准确配置 formState 的值，
          * 然后发送请求时使用 formState 变量
+         *
+         * 如果传入的 values 配置正确，则可以直接使用 values
          */
-        const onFinish = (values: any) => {
+        const onFinish = (values: Api['/admin/login']) => {
 
             console.log('Form Data: ', values);
-
-            console.log('FormState Interface: ', formState);
 
             /**
              * Axios Example
              *
              * @link https://www.axios-http.cn/docs/post_example
              */
-            const responseData = axios.post(apiHost + `/admin/login`, formState)
+            axios.post(apiHost + `/admin/login`, values)
                 .then(function (response) {
-                    console.log('Response Success:', response);
+                    console.log('Request Success:', response);
 
                     /**
                      * 使用类型接口，并进行验证
@@ -118,14 +128,14 @@ export default defineComponent({
                      * const data = <Response>response.data;
                      */
                     const data = <Response>response.data;
-                    if(data.code !== 1) {
+                    if (data.code !== 1) {
                         throw new Error(`请求有误! 错误信息：${data.message}`);
                     } else {
                         console.log('Response Result:', data.data);
                     }
                 })
                 .catch(function (error) {
-                    console.log('Response Error:', error);
+                    throw new Error(`请求异常捕获! 错误信息：${error}`);
                 });
         };
 
