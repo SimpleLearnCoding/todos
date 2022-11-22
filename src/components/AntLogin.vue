@@ -118,7 +118,12 @@ export default defineComponent({
              *
              * @link https://www.axios-http.cn/docs/post_example
              */
-            axios.post(apiHost + `/admin/login`, values)
+            axios.post(apiHost + `/admin/login`, values,
+                {
+                    headers: {
+                        'Content-Language': 'en_US'
+                    }
+                })
                 .then(function (response) {
                     console.log('Request Success:', response);
 
@@ -129,12 +134,14 @@ export default defineComponent({
                      */
                     const data = <Response>response.data;
                     if (data.code !== 1) {
+                        // todo 弹窗提示
                         throw new Error(`请求有误! 错误信息：${data.message}`);
                     } else {
                         console.log('Response Result:', data.data);
                     }
                 })
                 .catch(function (error) {
+                    // todo 弹窗提示
                     throw new Error(`请求异常捕获! 错误信息：${error}`);
                 });
         };
@@ -145,6 +152,9 @@ export default defineComponent({
          */
         const onFinishFailed = (errorInfo: any) => {
             console.log('Failed:', errorInfo);
+
+            // todo 弹窗提示
+
         };
 
         const disabled = computed(() => {
